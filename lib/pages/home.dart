@@ -121,7 +121,7 @@ class Home extends StatelessWidget {
             crossAxisSpacing: 15,
             mainAxisSpacing: 30,
           ),
-          itemCount: 10,
+          itemCount: 20,
           itemBuilder: (BuildContext context, int index) {
             return GestureDetector(
               onTap: () {},
