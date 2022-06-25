@@ -54,6 +54,64 @@ class Home extends StatelessWidget {
         ],
         title: const Text("home"),
       ),
+      drawer: Drawer(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              children: const [
+                UserAccountsDrawerHeader(
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: NetworkImage(
+                        "https://static.vecteezy.com/packs/media/components/global/search-explore-nav/img/vectors/term-bg-4-5af9c270adb750fdeb8f6a17fc9bfe54.jpg",
+                      ),
+                    ),
+                  ),
+                  accountName: Text(
+                    "ashraf sayed",
+                    style: TextStyle(color: Colors.black),
+                  ),
+                  accountEmail: Text(
+                    "ashraf@gmail.com",
+                    style: TextStyle(color: Colors.black),
+                  ),
+                  currentAccountPicture: CircleAvatar(
+                    radius: 50,
+                    backgroundImage: NetworkImage(
+                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-yGniKBDScl2Eh_F8aLOZRLBuyrGeZnQgOA&usqp=CAU",
+                    ),
+                  ),
+                ),
+                ListTile(
+                  title: Text("home"),
+                  leading: Icon(Icons.home),
+                ),
+                ListTile(
+                  title: Text("my products"),
+                  leading: Icon(Icons.production_quantity_limits),
+                ),
+                ListTile(
+                  title: Text("about"),
+                  leading: Icon(Icons.person),
+                ),
+                ListTile(
+                  title: Text("logout"),
+                  leading: Icon(Icons.logout),
+                )
+              ],
+            ),
+            const Padding(
+              padding: EdgeInsets.only(bottom: 10),
+              child: Text(
+                "قام بتطويره اشرف سيد ",
+                style: TextStyle(fontSize: 20),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
