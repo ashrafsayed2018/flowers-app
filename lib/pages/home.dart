@@ -1,4 +1,5 @@
 import 'package:flowwer_app/constants/colors.dart';
+import 'package:flowwer_app/model/product.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatelessWidget {
@@ -52,7 +53,7 @@ class Home extends StatelessWidget {
             ],
           )
         ],
-        title: const Text("home"),
+        // title: const Text("home"),
       ),
       drawer: Drawer(
         child: Column(
@@ -121,19 +122,19 @@ class Home extends StatelessWidget {
             crossAxisSpacing: 15,
             mainAxisSpacing: 30,
           ),
-          itemCount: 20,
+          itemCount: products.length,
           itemBuilder: (BuildContext context, int index) {
             return GestureDetector(
               onTap: () {},
               child: GridTile(
                 footer: GridTileBar(
-                  title: const Text("first text"),
+                  title: Text(products[index].name),
                   backgroundColor: appBarGreen,
                   leading:
                       IconButton(onPressed: () {}, icon: const Icon(Icons.add)),
-                  trailing: const Text(
-                    "\$ 13",
-                    style: TextStyle(
+                  trailing: Text(
+                    "\$ ${products[index].price}",
+                    style: const TextStyle(
                       color: Colors.white,
                     ),
                   ),
@@ -148,7 +149,7 @@ class Home extends StatelessWidget {
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(20),
                         child: Image.network(
-                          "https://source.unsplash.com/random/200x200?sig=$index",
+                          products[index].image + index.toString(),
                           fit: BoxFit.cover,
                         ),
                       ),
