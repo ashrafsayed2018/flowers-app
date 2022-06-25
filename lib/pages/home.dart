@@ -112,6 +112,54 @@ class Home extends StatelessWidget {
           ],
         ),
       ),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 10),
+        child: GridView.builder(
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            childAspectRatio: 4 / 5,
+            crossAxisSpacing: 15,
+            mainAxisSpacing: 30,
+          ),
+          itemCount: 10,
+          itemBuilder: (BuildContext context, int index) {
+            return GestureDetector(
+              onTap: () {},
+              child: GridTile(
+                footer: GridTileBar(
+                  title: const Text("first text"),
+                  backgroundColor: appBarGreen,
+                  leading:
+                      IconButton(onPressed: () {}, icon: const Icon(Icons.add)),
+                  trailing: const Text(
+                    "\$ 13",
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+                child: Stack(
+                  children: [
+                    Positioned(
+                      top: -3,
+                      bottom: -3,
+                      right: 0,
+                      left: 0,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(20),
+                        child: Image.network(
+                          "https://source.unsplash.com/random/200x200?sig=$index",
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            );
+          },
+        ),
+      ),
     );
   }
 }
