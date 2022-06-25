@@ -1,5 +1,6 @@
 import 'package:flowwer_app/constants/colors.dart';
 import 'package:flowwer_app/model/product.dart';
+import 'package:flowwer_app/pages/details.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatelessWidget {
@@ -125,7 +126,13 @@ class Home extends StatelessWidget {
           itemCount: products.length,
           itemBuilder: (BuildContext context, int index) {
             return GestureDetector(
-              onTap: () {},
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return Details(
+                    product: products[index],
+                  );
+                }));
+              },
               child: GridTile(
                 footer: GridTileBar(
                   title: Text(products[index].name),
