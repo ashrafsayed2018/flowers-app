@@ -1,7 +1,11 @@
 import 'package:flowwer_app/constants/colors.dart';
 import 'package:flowwer_app/model/product.dart';
 import 'package:flowwer_app/pages/details.dart';
+import 'package:flowwer_app/pages/login.dart';
+import 'package:flowwer_app/widgets/myappbar.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:flowwer_app/provider/cart.dart';
 
 class Home extends StatelessWidget {
   const Home({Key? key}) : super(key: key);
@@ -9,60 +13,14 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: appBarGreen,
-        actions: [
-          Row(
-            children: [
-              const Text(
-                "\$ 0",
-                style: TextStyle(
-                  fontSize: 16,
-                ),
-              ),
-              const SizedBox(
-                width: 10,
-              ),
-              Stack(
-                children: [
-                  Positioned(
-                    width: 20,
-                    top: -2,
-                    left: -2,
-                    child: Container(
-                      alignment: Alignment.center,
-                      width: 20,
-                      height: 20,
-                      padding: const EdgeInsets.all(2),
-                      decoration: BoxDecoration(
-                        color: Colors.red,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: const Text(
-                        "89",
-                        style: TextStyle(fontSize: 12),
-                      ),
-                    ),
-                  ),
-                  IconButton(
-                    padding: const EdgeInsets.all(0),
-                    onPressed: () {},
-                    icon: const Icon(Icons.shopping_cart),
-                  )
-                ],
-              ),
-            ],
-          )
-        ],
-        // title: const Text("home"),
-      ),
+      appBar: const MyAppBar(),
       drawer: Drawer(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Column(
-              children: const [
-                UserAccountsDrawerHeader(
+              children: [
+                const UserAccountsDrawerHeader(
                   decoration: BoxDecoration(
                     image: DecorationImage(
                       fit: BoxFit.cover,
@@ -86,21 +44,29 @@ class Home extends StatelessWidget {
                     ),
                   ),
                 ),
-                ListTile(
-                  title: Text("home"),
+                const ListTile(
+                  title: Text("المنتجات"),
                   leading: Icon(Icons.home),
                 ),
                 ListTile(
-                  title: Text("my products"),
-                  leading: Icon(Icons.production_quantity_limits),
+                  title: InkWell(
+                      child: const Text("المنتجات المفضلة"), onTap: () {}),
+                  leading: const Icon(Icons.favorite_outline),
+                ),
+                const ListTile(
+                  title: Text("الشراء"),
+                  leading: Icon(Icons.shopping_cart),
                 ),
                 ListTile(
-                  title: Text("about"),
-                  leading: Icon(Icons.person),
-                ),
-                ListTile(
-                  title: Text("logout"),
-                  leading: Icon(Icons.logout),
+                  title: InkWell(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const Login()));
+                      },
+                      child: const Text("دخول")),
+                  leading: const Icon(Icons.login),
                 )
               ],
             ),
@@ -137,8 +103,24 @@ class Home extends StatelessWidget {
                 footer: GridTileBar(
                   title: Text(products[index].name),
                   backgroundColor: appBarGreen,
-                  leading:
-                      IconButton(onPressed: () {}, icon: const Icon(Icons.add)),
+                  leading: Consumer<Cart>(builder: (context, cart, child) {
+                    return IconButton(
+                      icon: Icon(
+                        cart.selectedProducts.contains(products[index])
+                            ? Icons.favorite
+                            : Icons.add,
+                        color: cart.selectedProducts.contains(products[index])
+                            ? Colors.red
+                            : Colors.white,
+                        size: 18,
+                      ),
+                      onPressed: () {
+                        cart.selectedProducts.contains(products[index])
+                            ? cart.removeFromSelected(products[index])
+                            : cart.addToSelected(products[index]);
+                      },
+                    );
+                  }),
                   trailing: Text(
                     "\$ ${products[index].price}",
                     style: const TextStyle(
